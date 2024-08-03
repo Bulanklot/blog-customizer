@@ -29,29 +29,29 @@ export const ArticleParamsForm = ({
 	articleState,
 	setArticleState,
 }: TArticleParamsForm) => {
-	const [isOpenState, setIsOpenState] = useState<boolean>(false);
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-	const onClickHandler = () => {
-		setIsOpenState(!isOpenState);
+	const handleMenuClick = () => {
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	const rootRef = useRef<HTMLFormElement>(null);
 
 	useOutsideClickClose({
-		isOpen: isOpenState,
+		isOpen: isMenuOpen,
 		rootRef: rootRef,
-		onChange: setIsOpenState,
+		onChange: setIsMenuOpen,
 	});
 
 	const [selectArticleState, setSelectArticleState] =
 		useState<ArticleStateType>(articleState);
 
-	const formSubmitHandler = (e: FormEvent) => {
+	const handleFormSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		setArticleState(selectArticleState);
 	};
 
-	const inputChangeHandler = (
+	const handleInputChange = (
 		key: keyof ArticleStateType,
 		value: OptionType
 	) => {
@@ -60,16 +60,13 @@ export const ArticleParamsForm = ({
 
 	return (
 		<>
-			<ArrowButton OnClick={onClickHandler} isOpenState={isOpenState} />
+			<ArrowButton OnClick={handleMenuClick} isOpenState={isMenuOpen} />
 			<aside
-				className={clsx(
-					styles.container,
-					isOpenState && styles.container_open
-				)}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
 					ref={rootRef}
 					className={styles.form}
-					onSubmit={formSubmitHandler}
+					onSubmit={handleFormSubmit}
 					onReset={() => {
 						setArticleState(defaultArticleState);
 						setSelectArticleState(defaultArticleState);
@@ -82,7 +79,7 @@ export const ArticleParamsForm = ({
 						options={fontFamilyOptions}
 						selected={selectArticleState.fontFamilyOption}
 						onChange={(selectElement: OptionType) => {
-							inputChangeHandler('fontFamilyOption', selectElement);
+							handleInputChange('fontFamilyOption', selectElement);
 						}}
 					/>
 					<RadioGroup
@@ -91,7 +88,7 @@ export const ArticleParamsForm = ({
 						options={fontSizeOptions}
 						selected={selectArticleState.fontSizeOption}
 						onChange={(selectElement: OptionType) => {
-							inputChangeHandler('fontSizeOption', selectElement);
+							handleInputChange('fontSizeOption', selectElement);
 						}}
 					/>
 					<Select
@@ -99,7 +96,7 @@ export const ArticleParamsForm = ({
 						options={fontColors}
 						selected={selectArticleState.fontColor}
 						onChange={(selectElement: OptionType) => {
-							inputChangeHandler('fontColor', selectElement);
+							handleInputChange('fontColor', selectElement);
 						}}
 					/>
 					<Separator />
@@ -108,7 +105,7 @@ export const ArticleParamsForm = ({
 						options={backgroundColors}
 						selected={selectArticleState.backgroundColor}
 						onChange={(selectElement: OptionType) => {
-							inputChangeHandler('backgroundColor', selectElement);
+							handleInputChange('backgroundColor', selectElement);
 						}}
 					/>
 					<Select
@@ -116,7 +113,7 @@ export const ArticleParamsForm = ({
 						options={contentWidthArr}
 						selected={selectArticleState.contentWidth}
 						onChange={(selectElement: OptionType) => {
-							inputChangeHandler('contentWidth', selectElement);
+							handleInputChange('contentWidth', selectElement);
 						}}
 					/>
 					<div className={styles.bottomContainer}>
