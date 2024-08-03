@@ -16,7 +16,7 @@ const App = () => {
 	const [articleState, setArticleState] = useState(defaultArticleState);
 
 	return (
-		<div
+		<main
 			className={clsx(styles.main)}
 			style={
 				{
@@ -32,7 +32,7 @@ const App = () => {
 				setArticleState={setArticleState}
 			/>
 			<Article />
-		</div>
+		</main>
 	);
 };
 
